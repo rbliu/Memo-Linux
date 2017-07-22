@@ -1,3 +1,9 @@
-# Memo-ScientificLinux-6.8
+# Memo-Linux
 
-In this repo, I will make some notes for the process of setting up a Scientific Linux 6.8 machine ('ghk1')
+In this repo, I will make some notes/tricks for the Linux machines in my office.
+
+ghk1: ScientificLinux-6.8
+
+pine/elm: centOS6
+
+sakura/pear: opensuse
