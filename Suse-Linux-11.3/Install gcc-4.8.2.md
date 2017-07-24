@@ -12,17 +12,12 @@ The gcc version is too old. So we need to install a newer version such that we c
 
 Make sure you have super user permission:
 ```
-$ su
-
-$ mkdir /usr/local/tmp  #make this directory if there is not
-
-$ cd /usr/local/tmp
-
-$ wget https://ftp.gnu.org/gnu/gcc/gcc-4.8.2/gcc-4.8.2.tar.gz
-
-$ tar -xzvf gcc-4.8.2.tar.gz
-
-$ cd gcc-4.8.2
+su
+mkdir /usr/local/tmp  #make this directory if there is not
+cd /usr/local/tmp
+wget https://ftp.gnu.org/gnu/gcc/gcc-4.8.2/gcc-4.8.2.tar.gz
+tar -xzvf gcc-4.8.2.tar.gz
+cd gcc-4.8.2
 ```
 You will need some dependencies before installing gcc, this trick will help you to download them, aka gmp-4.3.2, mpc-0.8.1, and mpfr-2.4.2:
 ```
