@@ -1,4 +1,4 @@
-#From Simon Krughoff's notes
+*From Simon Krughoff's notes*
 
 How to run `obs_file`
 
