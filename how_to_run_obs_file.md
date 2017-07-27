@@ -12,7 +12,7 @@ git checkout tickets/DM-6924
 setup -k -r .
 scons
 cd ..
-``
+```
 
 * setup repo
 
