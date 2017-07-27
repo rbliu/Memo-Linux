@@ -14,7 +14,12 @@ scons
 cd ..
 ```
 
-* setup repo
+* Setup repo (for example, we call the working repo as 'repo', you will need to run all the DMstack commands under this repo directory)
+```
+mkdir repo
+cd repo
+cp PATH_TO_YOUR_IMAGES . (cp /PATH/TO/trial07.fits . in this case)
+```
 
 make a directory to put things in – 
 ```
