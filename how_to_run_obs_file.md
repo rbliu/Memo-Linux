@@ -1,6 +1,6 @@
 *From Simon Krughoff's notes*
 
-How to run `obs_file`
+How to run [`obs_file`](https://github.com/SimonKrughoff/obs_file/tree/tickets/DM-6924)
 
 # 1. Get data
 
@@ -28,11 +28,13 @@ mkdir repo
 cd repo
 cp PATH_TO_YOUR_IMAGES . (cp /PATH/TO/trial07.fits . in this case)
 ```
-make a directory to put things in – 
+
+* Make a directory to put things in – 
 ```
 mkdir input
 ```
-provide a mapper – 
+
+* provide a mapper – 
 ```
 echo "lsst.obs.file.FileMapper" > input/_mapper
 ```
@@ -46,4 +48,4 @@ ingestImages.py input/ trial07.fits --mode link
 ```
 processCcd.py input/ --id filename=trial07.fits --config isr.noise=5 --output output
 ```
-Note that you need to make a pretty goood guess at the noise in the image.  This is something I'd like to fix.
+* Note that you need to make a pretty goood guess at the noise in the image.  This is something I'd like to fix.
