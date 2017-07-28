@@ -29,7 +29,7 @@ cd repo
 cp PATH_TO_YOUR_IMAGES . (cp /PATH/TO/trial07.fits . in this case)
 ```
 
-* Make a directory to put things in – 
+* Make a directory to put things in
 ```
 mkdir input
 ```
