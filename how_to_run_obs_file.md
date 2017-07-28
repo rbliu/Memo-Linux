@@ -2,7 +2,7 @@
 
 How to run `obs_file`
 
-* get data – here I use **filename=trial07**.fits as an example.
+* get data – here I use **filename=trial07.fits** as an example.
 
 * get obs_file (assuming you have a stack set up)
 ```
