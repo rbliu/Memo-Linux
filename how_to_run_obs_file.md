@@ -2,11 +2,14 @@
 
 How to run `obs_file`
 
-# 1. get data – 
+# 1. Get data
 
-here I use **filename=trial07.fits** as an example.
+Here I use **filename=trial07.fits** as an example.
 
-# 2. get obs_file (assuming you have a stack set up)
+# 2. Get obs_file 
+
+(assuming you have a stack set up)
+
 ```
 git clone https://github.com/SimonKrughoff/obs_file
 cd obs_file
