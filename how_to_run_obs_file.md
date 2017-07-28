@@ -8,7 +8,7 @@ Here I use **filename=trial07.fits** as an example.
 
 # 2. Get obs_file 
 
-(assuming you have a stack set up)
+(assuming you have a DM stack set up)
 
 ```
 git clone https://github.com/SimonKrughoff/obs_file
@@ -21,7 +21,7 @@ cd ..
 
 # 3. Setup repo 
 
-(for example, we call the working repo as 'repo', you will need to run all the DMstack commands under this repo directory)
+(For example, we call the working repo as 'repo', you will need to run all the DMstack commands under this repo directory)
 
 ```
 mkdir repo
@@ -34,7 +34,7 @@ cp PATH_TO_YOUR_IMAGES . (cp /PATH/TO/trial07.fits . in this case)
 mkdir input
 ```
 
-* provide a mapper – 
+* Provide a mapper
 ```
 echo "lsst.obs.file.FileMapper" > input/_mapper
 ```
