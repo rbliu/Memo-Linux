@@ -2,9 +2,11 @@
 
 How to run `obs_file`
 
-* 1. get data – here I use **filename=trial07.fits** as an example.
+# 1. get data – 
 
-* 2. get obs_file (assuming you have a stack set up)
+here I use **filename=trial07.fits** as an example.
+
+# 2. get obs_file (assuming you have a stack set up)
 ```
 git clone https://github.com/SimonKrughoff/obs_file
 cd obs_file
@@ -14,7 +16,10 @@ scons
 cd ..
 ```
 
-* 3. Setup repo (for example, we call the working repo as 'repo', you will need to run all the DMstack commands under this repo directory)
+# 3. Setup repo 
+
+(for example, we call the working repo as 'repo', you will need to run all the DMstack commands under this repo directory)
+
 ```
 mkdir repo
 cd repo
@@ -29,12 +34,12 @@ provide a mapper –
 echo "lsst.obs.file.FileMapper" > input/_mapper
 ```
 
-* 4. ingest the data – 
+# 4. Ingest the data
 ```
 ingestImages.py input/ trial07.fits --mode link
 ```
 
-* 5. process the data – 
+# 5. Process the data
 ```
 processCcd.py input/ --id filename=trial07.fits --config isr.noise=5 --output output
 ```
