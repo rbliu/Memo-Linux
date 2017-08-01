@@ -24,9 +24,9 @@ Press F2 or Del to get into BOOT. Boot from USB disk.
 ## Ethernet IPv4: Manual
 |Address|Netmask|Gateway|
 |-------|-------| -------|
-|128.148.26.150|255.255.255.0|128.148.26.1|
+|?.?.26.150|255.255.255.0|?.?.26.1|
 
-* DNS: 128.148.26.101
+* DNS: ?.?.26.101
 * Search Domain: het.brown.edu
 
 ## BEGIN INSTALLATION!
@@ -48,7 +48,7 @@ setup
 [*] Use MD5 Passwords  [*] Use Shadow Passwords  
 [*] User Fingerprint reader  [*] Local Authorization is sufficient
 Domain: hetnis
-Server:128.148.26.101
+Server:?.?.26.101
 ```
 
 ## Disable SELinux
@@ -67,6 +67,7 @@ We also need to modify the following files in `/etc`:
 /etc/resolv.conf
 /etc/yp.conf
 /etc/idmap.conf
+
 /etc/pam.d/system-auth
 /etc/sysconfig/network
 /etc/sysconfig/authconfig
