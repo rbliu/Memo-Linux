@@ -16,10 +16,10 @@ Press F2 or Del to get into BOOT. Boot from USB disk.
 ## Partition
 * Device Type: Standard Partition
 * FS: xfs
-  * 389G ==> /export/home
-  * 60G  ==> /
-  * ~1G  ==> /Boot
-  * 7.8G ==> /var
+  * 389G ==> `/export/home`
+  * 60G  ==> `/`
+  * ~1G  ==> `/Boot`
+  * 7.8G ==> `/var`
 
 ## Ethernet IPv4: Manual
 |Address|Netmask|Gateway|
@@ -113,7 +113,7 @@ Solved: Add "Domain = het.brown.edu" in /etc/idmap.conf
     
 * How to setup ssh public key from other NIS client? (Require password anytime anywhere)
 
-Solved:After solving the "nobody" user problem, logout & login & `cd ~/.ssh`; make sure the owner of `~/.ssh` is the correct user
+Solved: After solving the "nobody" user problem, logout & login & `cd ~/.ssh`; make sure the owner of `~/.ssh` is the correct user
 
 # Useful Links
 https://docs.oracle.com/cd/E37670_01/E41138/html/ol_cfgclnt_nis.html
