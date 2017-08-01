@@ -32,7 +32,7 @@ Press F2 or Del to get into BOOT. Boot from USB disk.
 ## BEGIN INSTALLATION!
 Only set the root password. DON'T create any local user!
 
-
+------
 
 # NIS Client configuration
 
