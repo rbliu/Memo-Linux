@@ -56,7 +56,7 @@ We do not want SELinux.
 ```
 vim /etc/selinux/config
 ```
-and modify the first line to `disabled`.
+and modify the first line to `SELINUX=disabled`.
 
 ## Update files:
 We also need to modify the following files in `/etc`:
