@@ -1,4 +1,4 @@
-# ftp and vsftp
+# ftp and vsftp on CentOS 7
 
 * To setup ftp on the CentOS 7 machine, we need to install ftp and vsftpd first:
 ```
