@@ -2,7 +2,15 @@ Here is the memo I wrote when I was installing CentOS 7 on 'ash' and configuring
 
 # Install CentOS 7 on ash
 
-Press F2 or Del to get into BOOT. Boot from USB disk.
+## Make an installation USB drive
+
+Go to the CentOS 7 website and download the `DVD ISO` file:
+
+https://www.centos.org/download/
+
+Use some software (e.g. `Universal USB Installer`) to write the ISO file to a USB drive. In my case, the `DVD ISO` file requires about 4.5GB.
+
+Turn on the machine. Press `F2` or `Del` to get into BIOS. Boot from USB disk.
 
 ## Software: GNOME Desktop
 * GNOME Applications
