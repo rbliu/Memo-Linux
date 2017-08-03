@@ -23,7 +23,7 @@ vim /etc/vsftpd/vsftpd.conf
 listen=YES
 use_localtime=YES
 ```
-Here I only allow real user to access.
+Here I only allow real users to access ftp.
 
 * To enable and restart vsftp:
 ```
