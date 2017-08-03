@@ -108,7 +108,9 @@ rebuild lsst_distrib -b 13.0
 
 Here `13.0` can be any ticket or release number (e.g. `tickets/DM-9610`, `w.2017.30`, `12.1`).
 
-Again, you will get a build number after installation (e.g. `b2954`). When you need this version, just type `setup lsst_distrib -t b2954`. 
+Again, you will get a build number after installation (e.g. `b2954`). When you need this version, just type `setup lsst_distrib -t b2954`.
+
+It is always a good idea to check which version is being setup (by `eups list`) before you run any command.
 
 ## Links
 Some useful EUPS tutorial:
