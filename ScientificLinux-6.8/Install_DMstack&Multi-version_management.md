@@ -1,6 +1,6 @@
 # DM stack Installation
 
-It is required to have `gcc version>=4.8` to compile DM stack. So I installed RedHat devtoolset-2 at `/opt/rh/devtoolset-2`. To use it, either type or add the following to `~/.bashrc` : `source /opt/rh/devtoolset-2/enable`.
+It is required to have `gcc version>=4.8` to compile DM stack. So I installed RedHat devtoolset-2 at `/opt/rh/devtoolset-2` on `ghk1`. To use it, either type or add the following to `~/.bashrc` : `source /opt/rh/devtoolset-2/enable`.
 
 ## lsstsw installation
 
