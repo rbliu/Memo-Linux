@@ -17,8 +17,10 @@ su
 
 Add the YUM repositories:
 ```
-sudo wget -O /etc/yum.repos.d/slc6-devtoolset.repo http://linuxsoft.cern.ch/cern/devtoolset/slc6-devtoolset.repo
-wget -O /etc/yum.repos.d/slc5-devtoolset.repo http://linuxsoft.cern.ch/cern/devtoolset/slc5-devtoolset.repo
+sudo wget -O /etc/yum.repos.d/slc6-devtoolset.repo \
+  http://linuxsoft.cern.ch/cern/devtoolset/slc6-devtoolset.repo
+wget -O /etc/yum.repos.d/slc5-devtoolset.repo \
+  http://linuxsoft.cern.ch/cern/devtoolset/slc5-devtoolset.repo
 ```
 
 Install devtoolset-2 via YUM:
