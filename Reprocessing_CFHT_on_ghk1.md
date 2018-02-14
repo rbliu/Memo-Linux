@@ -178,6 +178,18 @@ This will create one warped image for each visit/CCD contributing to a each give
 
 It is safe to append `--timeout 9999999` option to avoid timeout error.
 
+Now, there should be warped pieces of images under
+```
+./output/coadd_dir/deepCoadd/g/0/0,0tempExp/ ~ 9,9tempExp/
+```
+
+
+### 5.4 Assemble the coadded images
+
+Assemble the temp exposures for each patch:
+```
+assembleCoadd.py output --output output/coadd_dir @patches_g.txt @A85_coadd_good_g.list -C config/assembleCoaddConfig.py
+```
 
 
 
