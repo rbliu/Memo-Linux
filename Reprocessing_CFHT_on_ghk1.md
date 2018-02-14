@@ -159,7 +159,24 @@ sed -e 's/^/--id filter=g /' patches.txt > patches_g.txt
 
 LSST processed data have the (tract,patch) layout. Usually, for one exposure, we have its `tract=0` and `patch=0,0` to `9,9`.
 
+
 ### 5.3 Warp images to adjust them to the sky map patches
+
+Create a file `A85_coadd_good_g.list` containing the following:
+```
+--selectId filter=g visit=762104
+--selectId filter=g visit=762105
+--selectId filter=g visit=762106
+```
+
+and run：
+```
+makeCoaddTempExp.py output --output output/coadd_dir --id filter=g @patches_g.txt @A85_coadd_good_g.list -C config/makeCoaddTempExpConfig.py -j 4
+```
+
+This will create one warped image for each visit/CCD contributing to a each given patch/tract.
+
+It is safe to append `--timeout 9999999` option to avoid timeout error.
 
 
 
