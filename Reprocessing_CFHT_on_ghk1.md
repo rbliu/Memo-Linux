@@ -216,7 +216,7 @@ The assebled images are:
 
 ## 6. Multi-band processing
 
-Repeat the coadd steps for each filter. And go through the multi-band processing steps for one patch:
+Repeat the coadd steps for each filter. And go through the multi-band processing steps for one patch (*Don't forget to add the [corresponding config files](https://github.com/LSSTDESC/ReprocessingTaskForce/tree/master/config)*):
 ```
 detectCoaddSources.py output/coadd_dir --output output/coadd_dir --id filter=g tract=0 patch=5,3
 mergeCoaddDetections.py output/coadd_dir --output output/coadd_dir --id tract=0 patch=5,3 filter=g^r^i
