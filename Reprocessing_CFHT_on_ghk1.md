@@ -123,7 +123,23 @@ where `A85_good_g.list` has
 
 and `-j 4` means using 4 cores (or threads) for parallel -- modify this number according to your machine.
 
-**Note: if there is no `output` directory before running `processCcd.py`, it will be created; if there is already an `output` directory with previous processed data, `processCcd.py` will overwrite output into it.**
+**Note: If there is no `output` directory before running `processCcd.py`, it will be created; if there is already an `output` directory with previous processed data, `processCcd.py` will overwrite output into it.**
+
+The output repository usually contains:
+```
+calexp	config	icSrc  metadata  repositoryCfg.yaml  schema  src  srcMatch
+```
+
+where `calexp` and `src` are two important outputs.
+
+`calexp` are calibrated exposures (Multi-Extension FITS) with these extensions:
+* image
+* mask
+* variance
+
+`src` are source catalogs (FITS table), which include all measurements.
+
+**Note: These images and measurements are just preliminary results from `processCcd.py`. To obtain advanced results, you need to go through the following steps until forced photometry.**
 
 
 
@@ -237,6 +253,11 @@ In forced photometry the source detection and galaxy shape measurement is perfor
 
 It can be run at the CCD level (`forcedPhotCcd.py`) or at the coadd level (`forcedPhotCoadd.py`).
 
+To run forced photometry on one patch:
+```
+forcedPhotCoadd.py output/coadd_dir --output output/coadd_dir --id tract=0 patch=5,3 filter=g -C config/forcedPhotCoaddConfig.py
+```
+
 
 
 ------
@@ -251,6 +272,9 @@ to the file `~/.eups/startup.py`.
 
 
 * If some parameters in the config file are not recognized, try commending those lines.
+
+
+* If the error asks you to add `--clobber-version` or `--clobber-config`, add it.
 
 
 * If option `-C` has trouble locating the config file, try the full text `--configfile`.
