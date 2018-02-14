@@ -218,6 +218,25 @@ mergeCoaddMeasurements.py output/coadd_dir --output output/coadd_dir --id tract=
 
 Or save the `--id` option as a `.list`/`.txt` file, and run the command with `@patch_g.txt`.
 
+Each coadd source is detected / deblended / measured using `CModel` -- make sure you have it in the config file:
+```
+import lsst.meas.modelfit
+import lsst.shapelet
+config.measurement.plugins.names |= ["modelfit_DoubleShapeletPsfApprox", "modelfit_CModel"]
+config.measurement.slots.modelFlux = "modelfit_CModel"
+```
+
+The multiband processing guarantees that if 1 source is identified and measured in 1 band, there is also corresponding sources in the other bands. 
+
+`CModel` fits an exponential and a de Vaucouleur separately, then fit a linear combination of the two while holding the ellipse parameters fixed at the best fit values from an independent fitting.
+
+
+## 7. Forced photometry
+
+In forced photometry the source detection and galaxy shape measurement is performed in a reference band and the photometry is measured in the other bands assuming that the same galaxy shape (even if it is not detected).
+
+It can be run at the CCD level (`forcedPhotCcd.py`) or at the coadd level (`forcedPhotCoadd.py`).
+
 
 
 ------
