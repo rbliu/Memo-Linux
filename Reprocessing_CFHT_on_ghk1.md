@@ -17,8 +17,9 @@ setup lsst_distrib
 ```
 If you have permission issue, send me an email (byliu1990(at)gmail.com)
 
-We take A85 CFHT data as an example:
+We take *A85* CFHT data as an example:
 ```
+working directory
 .
 |-- A85_good_g.list
 |-- A85_good_r.list
@@ -89,10 +90,12 @@ cd ..
 
 First, we need to ingest the data:
 ```
-ingestImages.py input rawData --mode link
+ingestImages.py input rawData/*.fz --mode link
 ```
 
-`--mode link` will create links instead of copying files
+where `input` gives the sub-directory to save the ingested data,
+
+and `--mode link` will create links instead of copying files
 
 
 ## 4. processCcd
@@ -118,7 +121,7 @@ where `A85_good_g.list` has
 --id visit=762106
 ```
 
-and `-j 4` means using 4 cores -- modify this number according to your machine.
+and `-j 4` means using 4 cores (or threads) for parallel -- modify this number according to your machine.
 
 **Note: if there is no `output` directory before running `processCcd.py`, it will be created; if there is already an `output` directory with previous processed data, `processCcd.py` will overwrite output into it.**
 
@@ -127,6 +130,8 @@ and `-j 4` means using 4 cores -- modify this number according to your machine.
 ## 5. coadd
 
 ### 5.1 Create a skymap
+
+To determine the skymap coordinates
 
 ```
 makeDiscreteSkyMap.py output --output output/coadd_dir @A85_good_g.list -C config/makeDiscreteSkyMapConfig.py
@@ -144,6 +149,17 @@ From the output of the previous step, get the coordinates of the lower left and 
 ```
 reportPatches.py output/coadd_dir --config raDecRange="9.074, -10.594, 11.728, -7.965" --id tract=0 patch=0,0 filter=g > patches.txt
 ```
+
+where `--id tract=0 patch=0,0` is meaningless but mandatory.
+
+Then we need to modify a little bit the `patches.txt` file:
+```
+sed -e 's/^/--id filter=g /' patches.txt > patches_g.txt
+```
+
+LSST processed data have the (tract,patch) layout. Usually, for one exposure, we have its `tract=0` and `patch=0,0` to `9,9`.
+
+### 5.3 Warp images to adjust them to the sky map patches
 
 
 
