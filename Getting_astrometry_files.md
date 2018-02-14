@@ -1,0 +1,53 @@
+# Get astrometry reference files
+
+* Download the SDSS-dr9 astrometry data. They should have names like `sdss-dr9-fink-v5b_and_282_0.fits`.
+
+* Setup DMstack as usual. 
+
+* Before running `processCcd.py`, create a directory named `astrometry_net_data`:
+```
+mkdir astrometry_net_data
+```
+
+* Obtain the WCS coordinates of the cluster you are going to process. (Here we take A85 as an example, which has RA=10.459, DEC=-9.302 deg)
+
+* Run the command:
+```
+get-healpix -N8 10.459 -- -9.302
+```
+and the output should be
+```
+(RA, DEC) = (10.459, -9.302) degrees
+Healpix=282 in the XY scheme (bighp=4, x=3, y=2)
+  healpix=432 in the RING scheme (ringnum=18, longind=0)
+  healpix=269 in the NESTED scheme.
+Healpix center is (5.625, -9.5940682) degrees
+Healpix is bounded by RA=[0, 11.25], Dec=[-14.4775, -4.78019] degrees.
+Healpix scale is 26384.5 arcsec.
+```
+where `Healpix=282 in the XY scheme (bighp=4, x=3, y=2)` gives the healpix number `282`.
+
+* We copy the corresponding astrometry reference files to the `astrometry_net_data` directory you just created `astrometry_net_data`:
+```
+cp sdss-dr9-fink-v5b_and_282_*.fits /working/directory/astrometry_net_data/
+```
+
+* At last, add an `andConfig.py` to the directory with the following lines:
+```
+filters = "ugriz"
+root.magColumnMap = dict([(f,f) for f in filters])
+root.magErrorColumnMap = dict([(f, f + '_err') for f in filters])
+root.indexFiles = ["sdss-dr9-fink-v5b_and_282_0.fits",
+               "sdss-dr9-fink-v5b_and_282_1.fits",
+               "sdss-dr9-fink-v5b_and_282_2.fits"
+               ]
+```
+
+* Therefore, the directory should have the structure:
+```
+astrometry_net_data/
+|-- andConfig.py
+|-- sdss-dr9-fink-v5b_and_282_0.fits
+|-- sdss-dr9-fink-v5b_and_282_1.fits
+`-- sdss-dr9-fink-v5b_and_282_2.fits
+```
