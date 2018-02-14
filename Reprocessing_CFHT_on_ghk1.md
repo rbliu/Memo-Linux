@@ -191,7 +191,32 @@ Assemble the temp exposures for each patch:
 assembleCoadd.py output --output output/coadd_dir @patches_g.txt @A85_coadd_good_g.list -C config/assembleCoaddConfig.py
 ```
 
+The assebled images are:
+```
+./output/coadd_dir/deepCoadd/g/0/0,0.fits ~ 9,9.fits
+```
 
+
+
+## 6. Multi-band processing
+
+Repeat the coadd steps for each filter. And go through the multi-band processing steps for one patch:
+```
+detectCoaddSources.py output/coadd_dir --output output/coadd_dir --id filter=g tract=0 patch=5,3
+mergeCoaddDetections.py output/coadd_dir --output output/coadd_dir --id tract=0 patch=5,3 filter=g^r^i
+measureCoaddSources.py output/coadd_dir --output output/coadd_dir --id tract=0 patch=5,3 filter=g
+mergeCoaddMeasurements.py output/coadd_dir --output output/coadd_dir --id tract=0 patch=5,3 filter=g^r^i
+```
+
+Or run it for the whole tract:
+```
+detectCoaddSources.py output/coadd_dir --output output/coadd_dir --id filter=g tract=0
+mergeCoaddDetections.py output/coadd_dir --output output/coadd_dir --id tract=0 filter=g^r^i
+measureCoaddSources.py output/coadd_dir --output output/coadd_dir --id tract=0 filter=g
+mergeCoaddMeasurements.py output/coadd_dir --output output/coadd_dir --id tract=0 filter=g^r^i
+```
+
+Or save the `--id` option as a `.list`/`.txt` file, and run the command with `@patch_g.txt`.
 
 
 
