@@ -29,7 +29,7 @@ where `Healpix=282 in the XY scheme (bighp=4, x=3, y=2)` gives the healpix numbe
 
 * We copy the corresponding astrometry reference files to the `astrometry_net_data` directory you just created `astrometry_net_data`:
 ```
-cp sdss-dr9-fink-v5b_and_282_*.fits /working/directory/astrometry_net_data/
+cp /path/to/sdss/astrometry/data/sdss-dr9-fink-v5b_and_282_*.fits /working/directory/astrometry_net_data/
 ```
 
 * At last, add an `andConfig.py` to the directory with the following lines:
