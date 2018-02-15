@@ -261,7 +261,7 @@ forcedPhotCoadd.py output/coadd_dir --output output/coadd_dir --id tract=0 patch
 
 
 ------
-### Trouble-shooting
+### #Trouble-shooting#
 
 
 * If you got error with "exclusive lock" when using `eups`, try adding this line
@@ -277,4 +277,4 @@ to the file `~/.eups/startup.py`.
 * If the error asks you to add `--clobber-version` or `--clobber-config`, add it.
 
 
-* If option `-C` has trouble locating the config file, try the full text `--configfile`.
+* If option `-C` has trouble locating the config file, try the full option text `--configfile`.
