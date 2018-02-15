@@ -39,8 +39,7 @@ root.magColumnMap = dict([(f,f) for f in filters])
 root.magErrorColumnMap = dict([(f, f + '_err') for f in filters])
 root.indexFiles = ["sdss-dr9-fink-v5b_and_282_0.fits",
                "sdss-dr9-fink-v5b_and_282_1.fits",
-               "sdss-dr9-fink-v5b_and_282_2.fits"
-               ]
+               "sdss-dr9-fink-v5b_and_282_2.fits"]
 ```
 
 * Therefore, the directory should have the structure:
