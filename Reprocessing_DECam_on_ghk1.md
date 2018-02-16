@@ -17,7 +17,7 @@ setup lsst_distrib
 ```
 If you have permission issue, send me an email (byliu1990(at)gmail.com)
 
-We take *A85* CFHT data as an example:
+We take *A85* DECam data as an example:
 ```
 working directory
 .
