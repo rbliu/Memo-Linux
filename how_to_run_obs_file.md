@@ -13,7 +13,8 @@ Here I use **filename=trial07.fits** as an example.
 ```
 git clone https://github.com/SimonKrughoff/obs_file
 cd obs_file
-git checkout tickets/DM-6924
+#git checkout tickets/DM-6924  ##temporally unavailable
+git checkout 21fd0d51806c43bf335300a0bc97e409ed9c703e
 setup -k -r .
 scons
 cd ..
