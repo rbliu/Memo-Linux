@@ -6,6 +6,7 @@
 hooks.config.site.lockDirectoryBase = None
 ```
 to the file `~/.eups/startup.py`.
+
 ------
 
 * If some parameters in the config file are not recognized, try commending those lines.
