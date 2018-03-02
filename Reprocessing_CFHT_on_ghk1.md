@@ -258,23 +258,3 @@ To run forced photometry on one patch:
 forcedPhotCoadd.py output/coadd_dir --output output/coadd_dir --id tract=0 patch=5,3 filter=g -C config/forcedPhotCoaddConfig.py
 ```
 
-
-
-------
-### #Trouble-shooting#
-
-
-* If you got error with "exclusive lock" when using `eups`, try adding this line
-```
-hooks.config.site.lockDirectoryBase = None
-```
-to the file `~/.eups/startup.py`.
-
-
-* If some parameters in the config file are not recognized, try commending those lines.
-
-
-* If the error asks you to add `--clobber-version` or `--clobber-config`, add it.
-
-
-* If option `-C` has trouble locating the config file, try the full option text `--configfile`.
