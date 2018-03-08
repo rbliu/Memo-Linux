@@ -1,6 +1,6 @@
 # Memo-Linux
 
-In this repo, I will make some notes/tricks for the Linux machines in my office.
+In this repo, I will make some notes/tricks for the Linux machines in my office, as well as instructions of DMstack installed on these machines.
 
 * `ghk1`: ScientificLinux-6.8
 
