@@ -16,7 +16,7 @@ to the file `~/.eups/startup.py`.
   __Solution__: try commending those lines.
 ------
 
-* __Error__: asking you to add `--clobber-version` or `--clobber-config`
+* __Error__: asking you to add `--clobber-versions` or `--clobber-config`
 
   __Solution__: add it.
 ------
