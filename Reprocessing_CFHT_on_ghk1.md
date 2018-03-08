@@ -5,7 +5,7 @@
 
 ssh to `ghk1` and setup DMstack. On `ghk1`, we have a `v13.0` version of DMstack installed. 
 
-**Sample config files can be found at https://github.com/LSSTDESC/ReprocessingTaskForce/tree/master/config**
+**Sample config files can be found at https://github.com/rbliu/Memo-Linux/tree/master/CFHT-config and https://github.com/LSSTDESC/ReprocessingTaskForce/tree/master/config**
 
 ```
 ssh ghk1
