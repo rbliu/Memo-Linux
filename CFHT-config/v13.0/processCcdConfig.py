@@ -17,6 +17,12 @@ config.charImage.measurePsf.psfDeterminer.name='psfex'
 import lsst.meas.modelfit
 config.charImage.measurement.plugins.names |= ["modelfit_DoubleShapeletPsfApprox", "modelfit_CModel"]
 
+# Shape measurements with HSM-regauss
+import os.path
+from lsst.utils import getPackageDir
+config.calibrate.measurement.load(os.path.join(getPackageDir("meas_extensions_shapeHSM"), "config", "enable.py"))
+config.calibrate.measurement.plugins["ext_shapeHSM_HsmShapeRegauss"].deblendNChild = "deblend_nChild"
+
 # Run astrometry using the new htm reference catalog format
 # The following retargets are necessary until the new scheme becomes standard
 # from lsst.meas.algorithms import LoadIndexedReferenceObjectsTask
