@@ -2,7 +2,7 @@ Machine Factors:
 
 Name: `ghk1`
 
-OS: Scientific Linux release 6.8 (Carbon)(Linux 2.6.32, 64-bit)
+OS: Scientific Linux release 6.9 (Carbon)(Linux 2.6.32, 64-bit)
 
 CPU: Intel(R) Xeon(R) CPU E5-2687W 0 @ 3.10GHz (2 threads/core x 32 cores)
 
