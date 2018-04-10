@@ -13,7 +13,7 @@ bash
 
 cd /export/rliu/lsstsw
 . bin/setup.sh
-setup lsst_distrib
+setup lsst_distrib -t b2954
 ```
 If you have permission issue, send me an email (byliu1990(at)gmail.com)
 
