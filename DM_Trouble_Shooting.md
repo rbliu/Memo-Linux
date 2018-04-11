@@ -1,7 +1,7 @@
 # Trouble-shooting
 
 
-* __Error__ with "exclusive lock" when using `eups` 
+* __Error__ with "exclusive lock" when using `eups`
 
   __Solution__: try adding this line
 ```
@@ -26,13 +26,20 @@ to the file `~/.eups/startup.py`.
   __Solution__: try the full option text `--configfile`.
 ------
 
-* __Error__: `processCcd.py error: Unrecognized ID key 'ccdnum'` 
+* __Error__: `processCcd.py error: Unrecognized ID key 'ccdnum'`
 
   __Solution__: it means that wrong `--id` keys were used in `processCcd`. Make sure you are using `ccd` for CFHT data, and `ccdnum` for DECam data. For other telescopes, please read the whole error message.
 ------
 
 * __Error__: `Could not find flux field(s): u2_camFLux, u2_flux.`
 
-  __Solution__: It occurs in u2-filter images -- in the filter map of `obs_cfht`, the normal u-filter is mapping to `u.MP9301`, which you can find in their headers. But, some u images were using `u.MP9302`, which are ingested as "u2" by DMstack. 
-  
+  __Solution__: It occurs in u2-filter images -- in the filter map of `obs_cfht`, the normal u-filter is mapping to `u.MP9301`, which you can find in their headers. But, some u images were using `u.MP9302`, which are ingested as "u2" by DMstack.
+
   Also be aware that this error is not only limited to u2 filter in CFHT data. If similar errors happen wot other data, try modifying the astrometry/photometry filter map part in the config file.
+------
+
+* __Error__: `Could not find matched sources` or `Unable to find andConfig.py in astrometry_net_data directory` or `no entries in posRefCat`
+
+  __Solution__: You probably didn't setup astrometry correctly or your image cannot be covered by the astrometry you set up.
+
+  Try to check the raw exposures to find out and through away the outliers. In the meantime, use `DM_14.0` with the new htm reference format. 
