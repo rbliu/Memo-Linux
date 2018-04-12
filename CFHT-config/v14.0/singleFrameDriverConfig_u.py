@@ -61,6 +61,7 @@ config.processCcd.calibrate.astromRefObjLoader.ref_dataset_name='sdss'
 # Photometry with sdss
 config.processCcd.calibrate.photoRefObjLoader.filterMap = {
     'u': 'U',
+    'u2': 'U',
     'g': 'G',
     'r': 'R',
     'i': 'I',
@@ -72,6 +73,7 @@ config.processCcd.calibrate.photoRefObjLoader.filterMap = {
 #Astrometry with sdss
 config.processCcd.calibrate.astromRefObjLoader.filterMap = {
    'u': 'U',
+   'u2': 'U',
    'g': 'G',
    'r': 'R',
    'i': 'I',
