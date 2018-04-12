@@ -89,12 +89,12 @@ config.processCcd.calibrate.photoCal.colorterms.data['e2v'].data['i2'].c0=0.0
 config.processCcd.calibrate.photoCal.colorterms.data['e2v'].data['i2'].primary='i'
 config.processCcd.calibrate.photoCal.colorterms.data['e2v'].data['i2'].secondary='r'
 
-config.calibrate.photoCal.colorterms.data['e2v'].data['u2']=lsst.pipe.tasks.colorterms.Colorterm()
-config.calibrate.photoCal.colorterms.data['e2v'].data['u2'].c2=0.0
-config.calibrate.photoCal.colorterms.data['e2v'].data['u2'].c1=0.241
-config.calibrate.photoCal.colorterms.data['e2v'].data['u2'].c0=0.0
-config.calibrate.photoCal.colorterms.data['e2v'].data['u2'].primary='u'
-config.calibrate.photoCal.colorterms.data['e2v'].data['u2'].secondary='g'
+config.processCcd.calibrate.photoCal.colorterms.data['e2v'].data['u2']=lsst.pipe.tasks.colorterms.Colorterm()
+config.processCcd.calibrate.photoCal.colorterms.data['e2v'].data['u2'].c2=0.0
+config.processCcd.calibrate.photoCal.colorterms.data['e2v'].data['u2'].c1=0.241
+config.processCcd.calibrate.photoCal.colorterms.data['e2v'].data['u2'].c0=0.0
+config.processCcd.calibrate.photoCal.colorterms.data['e2v'].data['u2'].primary='u'
+config.processCcd.calibrate.photoCal.colorterms.data['e2v'].data['u2'].secondary='g'
 
 # use Chebyshev background estimation
 config.processCcd.charImage.background.useApprox=True
