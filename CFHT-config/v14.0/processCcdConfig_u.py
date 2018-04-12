@@ -61,6 +61,7 @@ config.calibrate.astromRefObjLoader.ref_dataset_name='sdss'
 # Photometry with sdss
 config.calibrate.photoRefObjLoader.filterMap = {
     'u': 'U',
+    'u2': 'U',
     'g': 'G',
     'r': 'R',
     'i': 'I',
@@ -72,6 +73,7 @@ config.calibrate.photoRefObjLoader.filterMap = {
 #Astrometry with sdss
 config.calibrate.astromRefObjLoader.filterMap = {
     'u': 'U',
+    'u2': 'U',
     'g': 'G',
     'r': 'R',
     'i': 'I',
