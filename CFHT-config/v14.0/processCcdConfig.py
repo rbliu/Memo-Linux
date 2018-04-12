@@ -40,15 +40,15 @@ config.calibrate.photoRefObjLoader.ref_dataset_name='sdss'
 config.calibrate.astromRefObjLoader.ref_dataset_name='sdss'
 
 # Astrometry with panstarrs
-config.calibrate.astromRefObjLoader.filterMap = {
-    'u':'g',
-    'g':'g',
-    'r':'r',
-    'i':'i',
-    'i2': 'i',
-    'z':'z',
-    'y':'y',
-}
+# config.calibrate.astromRefObjLoader.filterMap = {
+#     'u':'g',
+#     'g':'g',
+#     'r':'r',
+#     'i':'i',
+#     'i2': 'i',
+#     'z':'z',
+#     'y':'y',
+# }
 # Astrometry with gaia
 #config.calibrate.astromRefObjLoader.filterMap = {
 #    'u':'phot_g_mean_mag',
@@ -70,14 +70,15 @@ config.calibrate.photoRefObjLoader.filterMap = {
 }
 
 #Astrometry with sdss
-#config.calibrate.astromRefObjLoader.filterMap = {
-#    'u': 'U',
-#    'g': 'G',
-#    'r': 'R',
-#    'i': 'I',
-#    'z': 'Z',
-#    'y': 'Z',
-#}
+config.calibrate.astromRefObjLoader.filterMap = {
+    'u': 'U',
+    'g': 'G',
+    'r': 'R',
+    'i': 'I',
+    'i2': 'I',
+    'z': 'Z',
+    'y': 'Z',
+}
 
 import lsst.pipe.tasks.colorterms
 config.calibrate.photoCal.colorterms.data['e2v'].data['i2']=lsst.pipe.tasks.colorterms.Colorterm()
