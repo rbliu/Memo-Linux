@@ -1,6 +1,6 @@
 _scarlet_ is designed to deblend sources in astrophysical images. It can handle multi-band inputs and generate a model for each deblended child.
 
-#Installation
+# Installation
 
 To install _scarlet_ on `ghk1`, I take advantage of the existing __DMstack__ environment (eg. miniconda) to deploy the dependencies.
 
