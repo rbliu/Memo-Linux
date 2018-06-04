@@ -16,6 +16,7 @@ First, install the dependencies and python packages that would be useful:
 $ pip install ipython
 $ pip install pybind11
 $ pip install proxmin
+$ pip install fitsio
 $ pip install sep
 
 $ git clone git://github.com/requests/requests.git
