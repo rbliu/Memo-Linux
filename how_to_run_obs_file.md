@@ -66,5 +66,8 @@ processCcd.py input/ --id filename=trial07.fits -C config/processCcdConfig.py --
 
 # Notes
 
-* Note that you need to make a pretty goood guess at the noise in the image. 
+* Note that you need to make a pretty goood guess at the noise in the image.
+
 * If the image header contains some certain keywords, obs_file may not support them. Known TypeError: `OBS-LAT`, `OBS-LONG`, `HUMIDITY`.
+
+* If you modified the config file and re-run `processCcd.py` with an existing `output` folder, you may need to attach `--clobber-config` to the `processCcd.py` command. (It will also be shown in the error message -- just follow it.)
