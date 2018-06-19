@@ -13,21 +13,25 @@ Here I use **filename=trial07.fits** as an example.
 
 # 2. Get obs_file 
 
-(assuming you have a DM stack set up)
-
+Assuming you have a DM stack set up.
+You only need to do this `git clone` and `git checkout` once.
 ```
 git clone https://github.com/SimonKrughoff/obs_file
 cd obs_file
 #git checkout tickets/DM-6924  ##temporally unavailable
 git checkout 21fd0d51806c43bf335300a0bc97e409ed9c703e
+```
+
+Setup `obs_file`. You need to do this `setup` and `scons` everytime before you are going to use `obs_file`.
+```
 setup -k -r .
 scons
 cd ..
 ```
 
-# 3. Setup repo 
+# 3. Setup repository 
 
-(For example, we call the working repo as 'repo', you will need to run all the DMstack commands under this repo directory)
+For example, we call the working repo as 'repo' (or any name you like), you will need to run all the DMstack commands under this repo directory.
 
 ```
 mkdir repo
