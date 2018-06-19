@@ -2,6 +2,11 @@
 
 How to run [`obs_file`](https://github.com/SimonKrughoff/obs_file/tree/tickets/DM-6924)
 
+# 0. Setup DM stack
+```
+source setupLSST-ghk1.sh
+```
+
 # 1. Get data
 
 Here I use **filename=trial07.fits** as an example.
