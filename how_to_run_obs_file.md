@@ -64,4 +64,7 @@ Here you can use `--config isr.noise=5` as the configuration parameter or use a 
 processCcd.py input/ --id filename=trial07.fits -C config/processCcdConfig.py --output output
 ```
 
+# Notes
+
 * Note that you need to make a pretty goood guess at the noise in the image. 
+* If the image header contains some certain keywords, obs_file may not support them. Known TypeError: `OBS-LAT`, `OBS-LONG`, `HUMIDITY`.
