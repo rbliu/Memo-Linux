@@ -58,4 +58,10 @@ ingestImages.py input/ trial07.fits --mode link
 ```
 processCcd.py input/ --id filename=trial07.fits --config isr.noise=5 --output output
 ```
+
+Here you can use `--config isr.noise=5` as the configuration parameter or use a _"config file"_:
+```
+processCcd.py input/ --id filename=trial07.fits -C config/processCcdConfig.py --output output
+```
+
 * Note that you need to make a pretty goood guess at the noise in the image.  This is something I'd like to fix.
