@@ -64,4 +64,4 @@ Here you can use `--config isr.noise=5` as the configuration parameter or use a 
 processCcd.py input/ --id filename=trial07.fits -C config/processCcdConfig.py --output output
 ```
 
-* Note that you need to make a pretty goood guess at the noise in the image.  This is something I'd like to fix.
+* Note that you need to make a pretty goood guess at the noise in the image. 
