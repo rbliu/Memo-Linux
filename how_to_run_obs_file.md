@@ -28,7 +28,6 @@ Setup `obs_file`. You need to do this `setup` and `scons` everytime before you a
 ```
 setup -k -r .
 scons
-cd ..
 ```
 
 # 3. Setup repository 
