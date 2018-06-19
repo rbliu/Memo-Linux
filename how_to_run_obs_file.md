@@ -4,7 +4,7 @@ How to run [`obs_file`](https://github.com/SimonKrughoff/obs_file/tree/tickets/D
 
 # 0. Setup DM stack
 ```
-ssh ghk1
+ssh ghk1     # or any other machine with DM stack v13.0 + obs-file installed
 bash
 source setupLSST-ghk1.sh
 ```
