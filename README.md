@@ -9,3 +9,5 @@ In this repo, I will make some notes/tricks for the Linux machines in my office,
 * `boojum`,`pine`: CentOS 6
 
 * `sakura/pear`: suse-11.3
+
+_This Github repository is only used as personal technical notes which belongs to Ian Dell'Antonio's group, and by no means to be published. Any code in this instruction is open-source and without any warranty._
