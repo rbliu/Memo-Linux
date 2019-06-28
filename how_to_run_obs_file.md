@@ -1,4 +1,4 @@
-_This instruction is based on [the Github page of Simon Krughoff](https://github.com/SimonKrughoff/obs_file). All copyrights belong to Simon Krughoff and other contributors of the original project._
+_This instruction is based on [the Github page of Simon Krughoff](https://github.com/SimonKrughoff/obs_file). All copyrights belong to Simon Krughoff and other contributors of the original project. This instruction is only used as personal technical notes, and by no means to be published. Any code in this instruction is open-source and without any warranty._
 
 How to run [`obs_file`](https://github.com/SimonKrughoff/obs_file/tree/tickets/DM-6924)
 
