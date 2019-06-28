@@ -25,10 +25,7 @@ config.measurement.slots.modelFlux = "modelfit_CModel"
 
 config.doApCorr=True
 
-
-# We only need reference catalogs for quality assurance purposes
-# We use Pan-STARRS for matching griz bands
-# We use SDSS for u band
+# No u band in PS1. Use SDSS
 from lsst.meas.algorithms import LoadIndexedReferenceObjectsTask
 config.match.refObjLoader.retarget(LoadIndexedReferenceObjectsTask)
 config.match.refObjLoader.ref_dataset_name='sdss'
