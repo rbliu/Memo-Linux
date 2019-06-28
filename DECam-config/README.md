@@ -1,6 +1,6 @@
-# DECam Config File
-
 __redundant repo__
+
+# DECam Config File
 
 This repository contains the DMstack configuration file for __DECam__ at the choice of Robert Liu.
 
