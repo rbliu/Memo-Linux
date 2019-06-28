@@ -26,8 +26,6 @@ config.measurement.slots.modelFlux = "modelfit_CModel"
 config.doApCorr=True
 
 # No u band in PS1. Use SDSS
-from lsst.meas.algorithms import LoadIndexedReferenceObjectsTask
-config.match.refObjLoader.retarget(LoadIndexedReferenceObjectsTask)
 config.match.refObjLoader.ref_dataset_name='sdss'
 config.match.refObjLoader.filterMap={
     'u': 'U',
