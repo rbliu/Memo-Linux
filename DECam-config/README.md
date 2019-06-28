@@ -1,4 +1,4 @@
-__redundant repo__
+__$$$$$ Redundant repo $$$$$__
 
 # DECam Config File
 
