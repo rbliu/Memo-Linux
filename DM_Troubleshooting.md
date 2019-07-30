@@ -1,4 +1,4 @@
-# Trouble-shooting
+# LSST DM Troubleshooting Logs
 
 ------
 ## For DM stack v17.0
