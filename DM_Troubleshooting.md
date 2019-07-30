@@ -6,7 +6,7 @@
 
 * __Error__: In `processCcd`, FATAL error: `lsst::pex::exceptions::RuntimeError: 'DateTime not valid'`
 
-  __Solution__: It's the new `astro_metadata_translator` issue in v17.0.1. New DECam header does NOT have `DTUTC` keyword since Nov 2017. A quick fix if to add the `DTUTC` keyword to the primary header of raw or instcal image (eg. DTUTC = 2018-12-12T07:14:51). You can use the `fitsAddDT.py` script in my [LSST_DM_Scripts](https://github.com/rbliu/LSST_DM_Scripts) github repository to do this.
+  __Solution__: It's the new `astro_metadata_translator` issue in v17.0.1. New __DECam__ header does NOT have `DTUTC` keyword since Nov 2017. A quick fix is adding the `DTUTC` keyword to the primary header of raw or instcal images (eg. DTUTC = 2018-12-12T07:14:51). You can use the `fitsAddDT.py` script in my [LSST_DM_Scripts](https://github.com/rbliu/LSST_DM_Scripts) github repository to do this.
 
 ------
 
