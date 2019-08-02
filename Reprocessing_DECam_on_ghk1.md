@@ -1,94 +1,51 @@
 __$$$$$ Redundant file $$$$$__
 
-# (In construction)DECam Reprocessing on `ghk1`
+_This instruction is based on the [Wiki page of CFHTLS-reprocessing](https://github.com/LSSTDESC/ReprocessingTaskForce/wiki) and [another obs_decam tutorial documentation](https://www.overleaf.com/read/vmnstztyfbht). In addition to giving credit to the editors of the Wiki page, I also greatly appreciate help from Dominique Boutigny, Shenming Fu, Jim Bosch, Dominique Fouchez, Robert Lupton, Simon Krughoff, Nicolas Chotard, Johann Cohen-Tanugi, Meredith Rawls, Kian-Tat Lim, Colin Slater, Chris Waters, John Parejko, and all the experts in DM team and the LSST Community. This instruction is only used as personal technical notes which belongs to Ian Dell'Antonio's group, and by no means to be published. Any code in this instruction is open-source and without any warranty._
+
+# (In construction) DECam Reprocessing on `ghk1`
 
 
 ## 1. Login to `ghk1`
 
-ssh to `ghk1` and setup DMstack. On `ghk1`, we have a `v13.0` version of DMstack installed. 
+ssh to `ghk1` and setup DMstack. We have a `v17.0` version of DMstack installed.
 
 **Sample config files can be found at https://github.com/LSSTDESC/ReprocessingTaskForce/tree/master/config**
 
 ```
 ssh ghk1
 bash
-
-cd /export/rliu/lsstsw
-. bin/setup.sh
+source /net/mangrove/export/data/astro/lsst_stack_v17_0_1/loadLSST.bash
 setup lsst_distrib
 ```
 If you have permission issue, send me an email (byliu1990(at)gmail.com)
 
-We take *A85* DECam data as an example:
+You can process either DECam Community Pipeline products (instrumental calibrated images) or raw data. As for now, the masks in the CP products may cause some issue in `processCcd`. So we suggest using raw data.
+
+Suppose the working directory is named as `DECam_repo`. In this directory, create some sub-directories:
 ```
-working directory
-.
-|-- A85_good_g.list
-|-- A85_good_r.list
-|-- A85_good_u.list
-|
-|-- astrometry_net_data/
-|   |-- andConfig.py
-|   |-- sdss-dr9-fink-v5b_and_282_0.fits
-|   |-- sdss-dr9-fink-v5b_and_282_1.fits
-|   `-- sdss-dr9-fink-v5b_and_282_2.fits
-|-- config/
-|
-|-- input/
-|   |-- _mapper
-|   |-- raw
-|   |   `-- 04BF02
-|   |       `-- Abell\ 85
-|   |           |-- 2004-08-21
-|   |           |   `-- u
-|   |           |       |-- 758880p.fits.fz -> /net/mangrove/export/data/astro/rliu/cfht/A85/rawData/758880p.fits.fz
-|   |           |       |-- 758881p.fits.fz -> /net/mangrove/export/data/astro/rliu/cfht/A85/rawData/758881p.fits.fz
-|   |           |       `-- 758882p.fits.fz -> /net/mangrove/export/data/astro/rliu/cfht/A85/rawData/758882p.fits.fz
-|   |           `-- 2004-09-17
-|   |               |-- g
-|   |               |   |-- 762104p.fits.fz -> /net/mangrove/export/data/astro/rliu/cfht/A85/rawData/762104p.fits.fz
-|   |               |   |-- 762105p.fits.fz -> /net/mangrove/export/data/astro/rliu/cfht/A85/rawData/762105p.fits.fz
-|   |               |   `-- 762106p.fits.fz -> /net/mangrove/export/data/astro/rliu/cfht/A85/rawData/762106p.fits.fz
-|   |               `-- r
-|   |                   |-- 762114p.fits.fz -> /net/mangrove/export/data/astro/rliu/cfht/A85/rawData/762114p.fits.fz
-|   |                   |-- 762115p.fits.fz -> /net/mangrove/export/data/astro/rliu/cfht/A85/rawData/762115p.fits.fz
-|   |                   `-- 762116p.fits.fz -> /net/mangrove/export/data/astro/rliu/cfht/A85/rawData/762116p.fits.fz
-|   `-- registry.sqlite3
-|
-`-- rawData/
-    |-- 758880p.fits.fz
-    |-- 758881p.fits.fz
-    |-- 758882p.fits.fz
-    |-- 762104p.fits.fz
-    |-- 762105p.fits.fz
-    |-- 762106p.fits.fz
-    |-- 762114p.fits.fz
-    |-- 762115p.fits.fz
-    `-- 762116p.fits.fz
-
+mkdir raw_data config MasterCal_bias MasterCal_flat
+mkdir -p DATA/CALIB/2013-01-01
 ```
-where `rawData` has all the CFHT-processed images (`.fits` or `.fits.fz`);
 
-`astrometry_net_data` has the corresponding astrometry reference files (`andConfig.py` and `*.fits`);
+where `DATA` is the main directory for processing data;
 
-`config` has all the config files.
+`raw_data` has all the raw DECam images (`.fits.fz`);
+
+`config` is where you store all the config files.
 
 
 ## 2. Setup astrometry reference
 
-Follow [these steps](https://github.com/rbliu/Memo-Linux/blob/master/Getting_astrometry_files.md) to create the astrometry repo for this cluster.
+We have Gaia/Pan-STARRS-1/SDSS reference catalogs for astrometry and photometry calibration. By default, PS1 is used as both astrometry and photometry calibration. You can also choose Gaia catalog for astrometry.
 
-(The `astrometry_net_data` directory can be anywhere. I created it under the same working directory for convenience.)
-
-To setup astreometry reference:
+To setup astrometry reference:
 ```
-cd astrometry_net_data
-eups declare -m none -r . astrometry_net_data -t $USER && setup astrometry_net_data -t $USER
-cd ..
+ca DATA
+ln -s /export/rliu/refcats/htm_baseline ref_cats
 ```
 
 
-## 3. ingestImages
+## 3. Ingest Images and Master Calibration files
 
 First, we need to ingest the data:
 ```
@@ -244,7 +201,7 @@ config.measurement.plugins.names |= ["modelfit_DoubleShapeletPsfApprox", "modelf
 config.measurement.slots.modelFlux = "modelfit_CModel"
 ```
 
-The multiband processing guarantees that if 1 source is identified and measured in 1 band, there is also corresponding sources in the other bands. 
+The multiband processing guarantees that if 1 source is identified and measured in 1 band, there is also corresponding sources in the other bands.
 
 `CModel` fits an exponential and a de Vaucouleur separately, then fit a linear combination of the two while holding the ellipse parameters fixed at the best fit values from an independent fitting.
 
