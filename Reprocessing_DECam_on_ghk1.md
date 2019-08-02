@@ -31,7 +31,7 @@ where `DATA` is the main directory for processing data;
 
 `raw_data` has all the raw DECam images (`.fits.fz`);
 
-`config` is where you store all the config files.
+`config` is where you store all the config files; you can find all necessary config files in [this repository](https://github.com/rbliu/Memo-Linux/blob/master/DECam-config/v17.0)
 
 
 ## 2. Setup astrometry reference
@@ -50,6 +50,7 @@ First, ingest the raw data:
 ```
 ingestImagesDecam.py DATA --filetype raw raw_data/*.fz --mode link
 ```
+The sub-directory is named as `DATA/CALIB/2013-01-01`. But if your raw data is even older, you will need to name it as an earlier date.
 
 Then, ingest defect data:
 ```
@@ -77,30 +78,26 @@ ingestCalibs.py DATA --calib DATA/CALIB --calibType fringe --validity 9999 DATA/
 
 ## 4. processCcd
 
-For CFHT data, the file names are their "visit" or "exposure" ids. So we can process single CCD using:
+We can process single CCD using:
 ```
-processCcd.py input --output output --id visit=758880 ccd=10 -C config/processCcdConfig.py
+processCcd.py DATA --rerun processCcdOutputs --id visit=802342 ccdnum=35 -C config/processCcdConfig.py -c calibrate.doAstrometry=True calibrate.doPhotoCal=True
 ```
-
-Or process all CCDs in one exposure:
-```
-processCcd.py input --output output --id visit=758880 -C config/processCcdConfig.py
-```
+(usually, we run quick tests on single CCDs to make sure DM stack and the config file are working appropriately)
 
 Or process all exposures for one filter:
 ```
-processCcd.py input --output output @A85_good_g.list -C config/processCcdConfig.py -j 4
+processCcd.py DATA @g.list --calib DATA/CALIB --rerun processCcdOutputs -C config/processCcdConfig.py -c calibrate.doAstrometry=True calibrate.doPhotoCal=True -j 4
 ```
-where `A85_good_g.list` has
+where `g.list` has
 ```
---id visit=762104
---id visit=762105
---id visit=762106
+--id visit=431542 ccdnum=1^3..60^62
+--id visit=511246 ccdnum=1^3..60^62
+--id visit=802342 ccdnum=1^3..60
 ```
 
 and `-j 4` means using 4 cores (or threads) for parallel -- modify this number according to your machine.
 
-**Note: If there is no `output` directory before running `processCcd.py`, it will be created; if there is already an `output` directory with previous processed data, `processCcd.py` will overwrite output into it.**
+**Note: If there is no `DATA/rerun/processCcdOutputs` directory before running `processCcd.py`, it will be created; if there is already a `outDATA/rerun/processCcdOutputsput` directory with previous processed data, `processCcd.py` will overwrite output into it.**
 
 The output repository usually contains:
 ```
@@ -116,23 +113,23 @@ where `calexp` and `src` are two important outputs.
 
 `src` are source catalogs (FITS table), which include all measurements.
 
-**Note: These images and measurements are just preliminary results from `processCcd.py`. To obtain advanced results, you need to go through the following steps until forced photometry.**
+**Note: These images and measurements are just preliminary results from `processCcd.py`. To obtain advanced results, you need to run `processCcd.py` for all the filters and go through the following steps until forced photometry.**
 
 
 
-## 5. coadd
+## 5. Coadd
 
 ### 5.1 Create a skymap
 
 To determine the skymap coordinates
 
 ```
-makeDiscreteSkyMap.py output --output output/coadd_dir @A85_good_g.list -C config/makeDiscreteSkyMapConfig.py
+makeDiscreteSkyMap.py DATA @g.list @r.list --rerun processCcdOutputs:skyMap -C config/makeDiscreteSkyMapConfig.py
 ```
 
 and its output should look like:
 ```
-makeDiscreteSkyMap INFO: tract 0 has corners (11.738, -10.594), (9.064, -10.594), (9.074, -7.965), (11.728, -7.965) (RA, Dec deg) and 9 x 9 patches
+makeDiscreteSkyMap INFO: tract 0 has corners (150.596, -1.508), (147.674, -1.508), (150.596, 1.412), (147.674, 1.412) (RA, Dec deg) and 9 x 9 patches
 ```
 
 ### 5.2 Identify the list of (tract,patch)
@@ -140,31 +137,43 @@ makeDiscreteSkyMap INFO: tract 0 has corners (11.738, -10.594), (9.064, -10.594)
 From the output of the previous step, get the coordinates of the lower left and upper right corners in order to pass them to the following command:
 
 ```
-reportPatches.py output/coadd_dir --config raDecRange="9.074, -10.594, 11.728, -7.965" --id tract=0 patch=0,0 filter=g > patches.txt
+reportPatches.py DATA/rerun/skyMap/ --config raDecRange="147.674, -1.508, 150.596, 1.412" --id tract=0 patch=0,0 filter=r > patches.txt
 ```
 
-where `--id tract=0 patch=0,0` is meaningless but mandatory.
+where `--id tract=0 patch=0,0` is meaningless but mandatory. In some new versions of DM stack, the reportPatches step may also write some extra rows to patches.txt. So, double check patches.txt and make sure they only contain useful rows like:
+```
+--id tract=0 patch=0,0
+--id tract=0 patch=0,1
+```
 
 Then we need to modify a little bit the `patches.txt` file:
 ```
 sed -e 's/^/--id filter=g /' patches.txt > patches_g.txt
+sed -e 's/^/--id filter=r /' patches.txt > patches_r.txt
 ```
 
 LSST processed data have the (tract,patch) layout. Usually, for one exposure, we have its `tract=0` and `patch=0,0` to `9,9`.
 
+### 5.3 Jointcal
 
-### 5.3 Warp images to adjust them to the sky map patches
-
-Create a file `A85_coadd_good_g.list` containing the following:
 ```
---selectId filter=g visit=762104
---selectId filter=g visit=762105
---selectId filter=g visit=762106
+jointcal.py DATA --rerun skyMap:jointcal @g.list
+jointcal.py DATA --rerun skyMap:jointcal @r.list
+```
+
+
+### 5.4 Warp images to adjust them to the sky map patches
+
+Create two new list files:
+```
+sed 's/id/selectId/g' g.list > select_g.list
+sed 's/id/selectId/g' r.list > select_r.list
 ```
 
 and run：
 ```
-makeCoaddTempExp.py output --output output/coadd_dir --id filter=g @patches_g.txt @A85_coadd_good_g.list -C config/makeCoaddTempExpConfig.py -j 4
+makeCoaddTempExp.py DATA --rerun jointcal:coadd @select_g.list @patches_g.txt --config doApplyUberCal=True makePsfMatched=True -j 4
+makeCoaddTempExp.py DATA --rerun jointcal:coadd @select_r.list @patches_r.txt --config doApplyUberCal=True makePsfMatched=True -j 4
 ```
 
 This will create one warped image for each visit/CCD contributing to a each given patch/tract.
@@ -173,45 +182,63 @@ It is safe to append `--timeout 9999999` option to avoid timeout error.
 
 Now, there should be warped pieces of images under
 ```
-./output/coadd_dir/deepCoadd/g/0/0,0tempExp/ ~ 9,9tempExp/
+./DATA/rerun/coadd/deepCoadd/g/0/0,0tempExp/ ~ 9,9tempExp/
 ```
 
 
-### 5.4 Assemble the coadded images
+### 5.5 Assemble the coadded images
 
 Assemble the temp exposures for each patch:
 ```
-assembleCoadd.py output --output output/coadd_dir @patches_g.txt @A85_coadd_good_g.list -C config/assembleCoaddConfig.py
+assembleCoadd.py --warpCompare DATA --rerun coadd @select_g.list @patches_g.txt -j 4
+assembleCoadd.py --warpCompare DATA --rerun coadd @select_r.list @patches_r.txt -j 4
 ```
 
 The assebled images are:
 ```
-./output/coadd_dir/deepCoadd/g/0/0,0.fits ~ 9,9.fits
+./DATA/rerun/coadd/deepCoadd/g/0/0,0.fits ~ 9,9.fits
 ```
 
 
 
 ## 6. Multi-band processing
 
-Repeat the coadd steps for each filter. And go through the multi-band processing steps for one patch (*Don't forget to add the [corresponding config files](https://github.com/LSSTDESC/ReprocessingTaskForce/tree/master/config)*):
+Repeat the coadd steps for each filter. And go through the multi-band processing steps for one patch:
 ```
-detectCoaddSources.py output/coadd_dir --output output/coadd_dir --id filter=g tract=0 patch=5,3
-mergeCoaddDetections.py output/coadd_dir --output output/coadd_dir --id tract=0 patch=5,3 filter=g^r^i
-measureCoaddSources.py output/coadd_dir --output output/coadd_dir --id tract=0 patch=5,3 filter=g
-mergeCoaddMeasurements.py output/coadd_dir --output output/coadd_dir --id tract=0 patch=5,3 filter=g^r^i
+detectCoaddSources.py DATA --rerun coadd:coaddMeasure @patches_g.txt -j 4
+detectCoaddSources.py DATA --rerun coadd:coaddMeasure @patches_r.txt -j 4
+
+mergeCoaddDetections.py DATA --rerun coaddMeasure --id filter=g^r
+
+deblendCoaddSources.py DATA --rerun coaddMeasure --id filter=g -j 4
+deblendCoaddSources.py DATA --rerun coaddMeasure --id filter=r -j 4
+
+measureCoaddSources.py DATA --rerun coaddMeasure:coaddMeasure2 --id filter=g -C config/measureCoaddSourcesConfig.py -j 4
+measureCoaddSources.py DATA --rerun coaddMeasure:coaddMeasure2 --id filter=r -C config/measureCoaddSourcesConfig.py -j 4
+
+mergeCoaddMeasurements.py DATA --rerun coaddMeasure2 --id filter=g^r -j 4
 ```
 
-Or run it for the whole tract:
-```
-detectCoaddSources.py output/coadd_dir --output output/coadd_dir --id filter=g tract=0
-mergeCoaddDetections.py output/coadd_dir --output output/coadd_dir --id tract=0 filter=g^r^i
-measureCoaddSources.py output/coadd_dir --output output/coadd_dir --id tract=0 filter=g
-mergeCoaddMeasurements.py output/coadd_dir --output output/coadd_dir --id tract=0 filter=g^r^i
-```
+Or use the `--id` option to run any single step on a given patch.
 
-Or save the `--id` option as a `.list`/`.txt` file, and run the command with `@patch_g.txt`.
+* `detectCoaddSources.py` = source detection in the deep-coadded images. Repeat this step for all bands you have coadded.
+* `mergeCoaddDetections.py` = merges the detected sources from multi-band. Connect all bands from the previous step with `^` in the `--id` option.
+* `deblendCoaddSources.py` = deblending of the deep-coadded sources. Again, you need to repeat this step for all band.
+* `measureCoaddSources.py` = shape measurement of the detected sources. Repeat this step for all bands you have coadded.
+* `mergeCoaddMeasurements.py` = use the best measured band as the reference band for each source, which will be used in the following `forcedPhotometry` step. Connect all bands from the previous step with `^` in the `--id` option.
 
-Each coadd source is detected / deblended / measured using `CModel` -- make sure you have it in the config file:
+You should expect the outputs of each step (in `deepCoadd-results` directory):
+
+ |         Step           |       Output Samples       |
+ |:----------------------:|:---------------------------:|
+ | detectCoaddSources     |  `bkgd-g-0-5,5.fits` + `calexp-g-0-5,5.fits` + `det-g-0-5,5.fits` |
+ | mergeCoaddDetections   |  `mergeDet-0-5,5.fits` |
+ | measureCoaddSources    |  `meas-g-0-5,5.fits`   |
+ | mergeCoaddMeasurements |  `ref-0-5,5.fits`      |
+
+where `meas-g-0-5,5.fits` is the coadd measurements for one filter in one patch.
+
+Each coadd source is detected / deblended / measured using `CModel` -- make sure you have it in the `measureCoaddSourcesConfig.py` config file:
 ```
 import lsst.meas.modelfit
 import lsst.shapelet
@@ -232,5 +259,14 @@ It can be run at the CCD level (`forcedPhotCcd.py`) or at the coadd level (`forc
 
 To run forced photometry on one patch:
 ```
-forcedPhotCoadd.py output/coadd_dir --output output/coadd_dir --id tract=0 patch=5,3 filter=g -C config/forcedPhotCoaddConfig.py
+forcedPhotCoadd.py DATA --rerun coaddMeasure2:coaddForcedPhot --id filter=g -C config/forcedPhotCoaddConfig.py -j 4
+forcedPhotCoadd.py DATA --rerun coaddMeasure2:coaddForcedPhot --id filter=r -C config/forcedPhotCoaddConfig.py -j 4
 ```
+
+
+
+## Reference
+
+- [LSST DESC Reprocessing Task Force Wiki page](https://github.com/LSSTDESC/ReprocessingTaskForce/wiki)
+- [Jim Bosch, DMTN-023: Pipeline Command-Line Drivers](https://dmtn-023.lsst.io/#)
+- [Getting started with the LSST Science Pipelines](https://pipelines.lsst.io/v/DM-14044/getting-started/index.html#getting-started-tutorial)
