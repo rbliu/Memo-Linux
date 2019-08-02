@@ -38,7 +38,6 @@ where `DATA` is the main directory for processing data;
 
 We have Gaia/Pan-STARRS-1/SDSS reference catalogs for astrometry and photometry calibration. By default, PS1 is used as both astrometry and photometry calibration. You can also choose Gaia catalog for astrometry.
 
-To setup astrometry reference:
 ```
 ca DATA
 ln -s /export/rliu/refcats/htm_baseline ref_cats
@@ -47,14 +46,33 @@ ln -s /export/rliu/refcats/htm_baseline ref_cats
 
 ## 3. Ingest Images and Master Calibration files
 
-First, we need to ingest the data:
+First, ingest the raw data:
 ```
-ingestImages.py input rawData/*.fz --mode link
+ingestImagesDecam.py DATA --filetype raw raw_data/*.fz --mode link
 ```
 
-where `input` gives the sub-directory to save the ingested data,
+Then, ingest defect data:
+```
+cp -v /net/mangrove/export/data2/astro/decam_defect/*.fits DATA/CALIB/2013-01-01/
+ingestCalibs.py DATA --calib DATA/CALIB --calibType defect --validity 9999 DATA/CALIB/2013-01-01/*.fits --mode skip
+```
 
-and `--mode link` will create links instead of copying files
+You need to download correct flat and bias(zero) master calibration data from NOAO archive, and put them in `MasterCal_flat` and `MasterCal_bias` respectively:
+```
+ingestCalibs.py DATA --calib DATA/CALIB MasterCal_flat/*fci*fits.fz --mode link --validity 9999
+ingestCalibs.py DATA --calib DATA/CALIB MasterCal_bias/*zci*fits.fz --mode link --validity 9999
+```
+
+Fringe is only used for z-band data:
+```
+mkdir -p DATA/CALIB/FRINGE/2013-01-01/z
+cp -v /net/mangrove/export/data2/astro/decam_fringe/DECamMasterCal_56876/fringecor/*_z_* .
+
+rename "DECam_Master_20131115v1-zG_ci_z_" "FRINGE-2013-11-15-" DECam_Master_20131115v1-zG_ci_z_*.fits
+mv -v FRINGE-2013-11-15*fits DATA/CALIB/FRINGE/2013-01-01/z/
+
+ingestCalibs.py DATA --calib DATA/CALIB --calibType fringe --validity 9999 DATA/CALIB/FRINGE/2013-01-01/z/* --mode skip
+```
 
 
 ## 4. processCcd
