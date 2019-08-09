@@ -10,7 +10,7 @@ import lsst.meas.modelfit
 config.charImage.measurement.plugins.names |= ["modelfit_DoubleShapeletPsfApprox", "modelfit_CModel"]
 config.charImage.measurement.slots.modelFlux = "modelfit_CModel"
 
-# Set SIP order to 3, the Task default before RFC-577 to maintain same behavior
+# Set SIP order to 3 (default is 5), the Task default before RFC-577 to maintain same behavior
 config.calibrate.astrometry.wcsFitter.order = 3
 
 #from lsst.meas.algorithms import LoadIndexedReferenceObjectsTask
@@ -21,11 +21,11 @@ config.calibrate.astrometry.wcsFitter.order = 3
 #config.calibrate.photoRefObjLoader.ref_dataset_name='pan-starrs'
 
 # color terms
-config.calibrate.photoCal.photoCatName = "pan-starrs" 
+config.calibrate.photoCal.photoCatName = "pan-starrs"
 config.calibrate.photoCal.applyColorTerms = True
 import lsst.pipe.tasks.colorterms
 colorterms = config.calibrate.photoCal.colorterms
-from lsst.pipe.tasks.colorterms import ColortermDict, Colorterm 
+from lsst.pipe.tasks.colorterms import ColortermDict, Colorterm
 colorterms.data["pan-starrs"] = ColortermDict(data={
 	    'g': Colorterm(primary="g", secondary="i", c0=0.00062, c1=0.03604, c2=0.01028),
 		'r': Colorterm(primary="g", secondary="i", c0=0.00495, c1=-0.08435, c2=0.03222),

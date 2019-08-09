@@ -1,5 +1,4 @@
 import os.path
-
 from lsst.utils import getPackageDir
 
 decamConfigDir = os.path.join(getPackageDir('obs_decam'), 'config')
