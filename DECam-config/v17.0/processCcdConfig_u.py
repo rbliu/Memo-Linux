@@ -85,15 +85,17 @@ config.calibrate.photoRefObjLoader.filterMap = {
 #	    'u': 'U',
 #}
 
-import lsst.pipe.tasks.colorterms
-config.calibrate.photoCal.photoCatName = "pan-starrs" 
-config.calibrate.photoCal.applyColorTerms = True
-colorterms = config.calibrate.photoCal.colorterms
-from lsst.pipe.tasks.colorterms import ColortermDict, Colorterm 
-colorterms.data["pan-starrs"] = ColortermDict(data={
-	    'g': Colorterm(primary="g", secondary="i", c0=0.00062, c1=0.03604, c2=0.01028),
-		'r': Colorterm(primary="g", secondary="i", c0=0.00495, c1=-0.08435, c2=0.03222),
-		'i': Colorterm(primary="g", secondary="i", c0=0.00904, c1=-0.04171, c2=0.00566),
-		'z': Colorterm(primary="g", secondary="i", c0=0.02583, c1=-0.07690, c2=0.02824),
-		'Y': Colorterm(primary="g", secondary="i", c0=0.02332, c1=-0.05992, c2=0.02840)
-})
+# For DECam data, no colorterm correction presently happens at all.
+# Waiting for the implementation of color terms.
+#import lsst.pipe.tasks.colorterms
+#config.calibrate.photoCal.photoCatName = "pan-starrs"
+#config.calibrate.photoCal.applyColorTerms = True
+#colorterms = config.calibrate.photoCal.colorterms
+#from lsst.pipe.tasks.colorterms import ColortermDict, Colorterm
+#colorterms.data["pan-starrs"] = ColortermDict(data={
+#	    'g': Colorterm(primary="g", secondary="i", c0=0.00062, c1=0.03604, c2=0.01028),
+#		'r': Colorterm(primary="g", secondary="i", c0=0.00495, c1=-0.08435, c2=0.03222),
+#		'i': Colorterm(primary="g", secondary="i", c0=0.00904, c1=-0.04171, c2=0.00566),
+#		'z': Colorterm(primary="g", secondary="i", c0=0.02583, c1=-0.07690, c2=0.02824),
+#		'Y': Colorterm(primary="g", secondary="i", c0=0.02332, c1=-0.05992, c2=0.02840)
+#})
